@@ -1,0 +1,133 @@
+﻿<Window x:Class="ItemSync2.GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="ItemSync 2.0 dev"
+        Height="350" Width="570" MinHeight="300" MinWidth="500"
+        AllowDrop="True" Drop="Window_Drop">
+    <Grid Margin="10,5,5,5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+
+
+        <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">DBC:</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">Database host:</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">Database login:</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">Database password:</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="5" VerticalAlignment="Center">Database name:</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="6" VerticalAlignment="Center">Table name:</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="7" VerticalAlignment="Center">Port:</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="9" VerticalAlignment="Center">Start ID:</TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="10" VerticalAlignment="Center">End ID:</TextBlock>
+
+
+        <TextBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Name="dbcBox" TextChanged="dbcBox_TextChanged">
+            <TextBox.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Your Item.dbc.</TextBlock>
+            </TextBox.ToolTip>
+        </TextBox>
+        <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Name="hostBox" TextChanged="hostBox_TextChanged">
+            <TextBox.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">IP address or domain name of your emu's MySQL server.</TextBlock>
+            </TextBox.ToolTip>
+        </TextBox>
+        <TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Name="loginBox" TextChanged="loginBox_TextChanged">
+            <TextBox.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Login to your MySQL server. You have to have appropriate access rights on database and table provided below.</TextBlock>
+            </TextBox.ToolTip>
+        </TextBox>
+        <PasswordBox Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Name="passwordBox" PasswordChanged="passwordBox_PasswordChanged">
+            <PasswordBox.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Please, enter your password.</TextBlock>
+            </PasswordBox.ToolTip>
+        </PasswordBox>
+        <TextBox Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" Name="databaseBox" TextChanged="databaseBox_TextChanged">
+            <TextBox.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Name of your World database. Default is world.</TextBlock>
+            </TextBox.ToolTip>
+        </TextBox>
+        <TextBox Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Name="tableBox" TextChanged="tableBox_TextChanged">
+            <TextBox.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Name of your item_template table. Unless you want to work with some backup/copy, this should be left as default.</TextBlock>
+            </TextBox.ToolTip>
+        </TextBox>
+        <xctk:IntegerUpDown Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="7" Name="portBox" ValueChanged="portBox_ValueChanged">
+            <xctk:IntegerUpDown.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Port your MySQL server is running on. 3306 is default.</TextBlock>
+            </xctk:IntegerUpDown.ToolTip>
+        </xctk:IntegerUpDown>
+        <xctk:IntegerUpDown Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="9" Name="startIDBox" ValueChanged="startIDBox_ValueChanged">
+            <xctk:IntegerUpDown.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Start of range of item IDs tool should work with.</TextBlock>
+            </xctk:IntegerUpDown.ToolTip>
+        </xctk:IntegerUpDown>
+        <xctk:IntegerUpDown Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="10" Name="endIDBox" ValueChanged="endIDBox_ValueChanged">
+            <xctk:IntegerUpDown.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">End of range of item IDs tool should work with.</TextBlock>
+            </xctk:IntegerUpDown.ToolTip>
+        </xctk:IntegerUpDown>
+        <CheckBox Grid.Column="1" Grid.Row="11" Name="savePassBox" Content="Save password" VerticalAlignment="Center" Margin="5,0,5,0" Checked="savePassBox_Checked" Unchecked="savePassBox_Checked">
+            <CheckBox.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Used if you click Save settings button. If checked, password will be saved.</TextBlock>
+            </CheckBox.ToolTip>
+        </CheckBox>
+
+        <Button Grid.Column="3" Grid.Row="0" Margin="5,0,5,0" Name="dbcButt" Click="dbcButt_Click" Content="Select DBC">
+            <Button.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Click to select your DBC by using Open file dialog.</TextBlock>
+            </Button.ToolTip>
+        </Button>
+        <Button Grid.Column="3" Grid.Row="7" Margin="5,0,5,0" Name="testConnButt" Click="testConnButt_Click" Content="Test connection">
+            <Button.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Attempts to open a test connection to MySQL server using information you provided.</TextBlock>
+            </Button.ToolTip>
+        </Button>
+        <Button Grid.Column="0" Grid.Row="11" Margin="0,0,5,0" Name="saveSettButt" Click="saveSettButt_Click" Content="Save settings">
+            <Button.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Saves data you entered into form and uses your prefferences as default on next startup.</TextBlock>
+            </Button.ToolTip>
+        </Button>
+        <Button Grid.Column="0" Grid.Row="12" Margin="0,0,5,0" Name="helpButt" Click="helpButt_Click" Content="Help">
+            <Button.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Opens repository's issue tracker.</TextBlock>
+            </Button.ToolTip>
+        </Button>
+        <Button Grid.Column="3" Grid.Row="10" Margin="5,0,5,0" Name="checkChangesButt" Click="checkChangesButt_Click" Content="Check for changes">
+            <Button.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Checks how many items exist within provided range in DB, how many in DBC, how many are missing and where, and how many aren't matching.</TextBlock>
+            </Button.ToolTip>
+        </Button>
+        <Button Grid.Column="3" Grid.Row="11" Grid.RowSpan="2" Margin="5,5,5,0" Name="dbToDBCButt" Click="dbToDBCButt_Click" Content="DB > DBC">
+            <Button.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Updates your DBC so it contains all items in DB and that all items in DBC match DB version.</TextBlock>
+            </Button.ToolTip>
+        </Button>
+        <Button Grid.Column="2" Grid.Row="11" Grid.RowSpan="2" Margin="5,5,0,0" Name="dbcToDBButt" Click="dbcToDBButt_Click" Content="DBC > DB">
+            <Button.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Inserts all items in DBC, which are missing in DB, into DB. Doesn't touch already existing stuff.</TextBlock>
+            </Button.ToolTip>
+        </Button>
+    </Grid>
+</Window>
