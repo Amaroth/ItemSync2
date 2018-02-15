@@ -74,6 +74,7 @@
     </Page>
     <Compile Include="Core\CoreController.cs" />
     <Compile Include="Core\DBCConnector.cs" />
+    <Compile Include="Core\Item.cs" />
     <Compile Include="Core\SQLConnector.cs" />
     <Compile Include="Core\SQLDataConfig.cs" />
     <Compile Include="Core\UserSettings.cs" />
