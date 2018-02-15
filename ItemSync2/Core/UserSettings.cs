@@ -113,6 +113,8 @@ namespace ItemSync2.Core
         /// </summary>
         public void SaveUserSettings()
         {
+            if (!Directory.Exists("Configs"))
+                Directory.CreateDirectory("Configs");
             using (TextWriter tw = new StreamWriter("Configs/UserSettings.xml", false, Encoding.UTF8))
             {
                 xml.GetElementsByTagName("dbcPath")[0].InnerText = dbcPath;

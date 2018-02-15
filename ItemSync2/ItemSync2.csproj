@@ -73,6 +73,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Core\CoreController.cs" />
+    <Compile Include="Core\DBCConnector.cs" />
+    <Compile Include="Core\SQLConnector.cs" />
+    <Compile Include="Core\SQLDataConfig.cs" />
     <Compile Include="Core\UserSettings.cs" />
     <Compile Include="Core\Utilities.cs" />
     <Compile Include="GUI\App.xaml.cs">
@@ -111,13 +114,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Configs\SQLConfig.xml" />
     <Content Include="Libs\MySql.Data.dll" />
     <Content Include="Libs\WDBXLib.Definitions.dll" />
     <Content Include="Libs\WDBXLib.dll" />
     <Content Include="Libs\Xceed.Wpf.Toolkit.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Configs\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
