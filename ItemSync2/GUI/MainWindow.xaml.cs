@@ -21,6 +21,9 @@ namespace ItemSync2.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        UserSettings usi = UserSettings.Instance;
+        CoreController core = CoreController.Instance;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -28,7 +31,18 @@ namespace ItemSync2.GUI
 
         internal void LoadSettings()
         {
+            dbcBox.Text = usi.dbcPath;
 
+            hostBox.Text = usi.host;
+            loginBox.Text = Utilities.ToInsecureString(usi.login);
+            passwordBox.Password = Utilities.ToInsecureString(usi.password);
+            savePassBox.IsChecked = usi.savePassword;
+            databaseBox.Text = usi.database;
+            tableBox.Text = usi.table;
+            portBox.Value = usi.port;
+
+            startIDBox.Value = usi.startID;
+            endIDBox.Value = usi.endID;
         }
 
         private void dbcBox_TextChanged(object sender, TextChangedEventArgs e)

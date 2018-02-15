@@ -73,17 +73,17 @@
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">Name of your item_template table. Unless you want to work with some backup/copy, this should be left as default.</TextBlock>
             </TextBox.ToolTip>
         </TextBox>
-        <xctk:IntegerUpDown Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="7" Name="portBox" ValueChanged="portBox_ValueChanged">
+        <xctk:IntegerUpDown Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="7" TextAlignment="Left" Minimum="0" Maximum="65535" Name="portBox" ValueChanged="portBox_ValueChanged">
             <xctk:IntegerUpDown.ToolTip>
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">Port your MySQL server is running on. 3306 is default.</TextBlock>
             </xctk:IntegerUpDown.ToolTip>
         </xctk:IntegerUpDown>
-        <xctk:IntegerUpDown Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="9" Name="startIDBox" ValueChanged="startIDBox_ValueChanged">
+        <xctk:IntegerUpDown Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="9" TextAlignment="Left" Minimum="1" Maximum="16777215" Name="startIDBox" ValueChanged="startIDBox_ValueChanged">
             <xctk:IntegerUpDown.ToolTip>
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">Start of range of item IDs tool should work with.</TextBlock>
             </xctk:IntegerUpDown.ToolTip>
         </xctk:IntegerUpDown>
-        <xctk:IntegerUpDown Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="10" Name="endIDBox" ValueChanged="endIDBox_ValueChanged">
+        <xctk:IntegerUpDown Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="10" TextAlignment="Left" Minimum="1" Maximum="16777215" Name="endIDBox" ValueChanged="endIDBox_ValueChanged">
             <xctk:IntegerUpDown.ToolTip>
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">End of range of item IDs tool should work with.</TextBlock>
             </xctk:IntegerUpDown.ToolTip>
