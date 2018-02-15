@@ -21,6 +21,7 @@ namespace ItemSync2.Core
 
         private SecureString connectionString;
 
+
         public SQLConnector()
         {
             try
@@ -71,6 +72,12 @@ namespace ItemSync2.Core
                 connection.Close();
             }
             catch (Exception e) { throw new Exception("Error occured while establishing database connection.\n\n" + e.Message); }
+        }
+
+        public Dictionary<int, Item> GetItems(int start, int end)
+        {
+            // Get ordered stuff.
+            return null;
         }
     }
 }

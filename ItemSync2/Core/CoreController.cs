@@ -46,7 +46,14 @@ namespace ItemSync2.Core
 
         public void CheckChanges()
         {
-
+            try
+            {
+                sql.SetConnectionInformation(usi.host, usi.port, usi.database, usi.table, usi.login, usi.password);
+                dbc.SetDBCFile(usi.dbcPath);
+                var inDatabase = sql.GetItems(usi.startID, usi.endID);
+                
+            }
+            catch (Exception e) { MessageBox.Show("Couldn't check for collisions, following error occured.:\n\n" + e.Message); }
         }
 
         public void DbToDbcSync()

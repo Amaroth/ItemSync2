@@ -10,7 +10,7 @@ namespace ItemSync2.Core
 {
     class DBCConnector
     {
-        private DBEntry<GameObjectDisplayInfo> dbc;
+        private DBEntry<Item> dbc;
 
         private string filePath;
 
@@ -23,7 +23,7 @@ namespace ItemSync2.Core
             try
             {
                 this.filePath = filePath;
-                dbc = DBReader.Read<GameObjectDisplayInfo>(filePath);
+                dbc = DBReader.Read<Item>(filePath);
             }
             catch (Exception e) { throw new Exception("Error occured while attempting to read provided DBC.:\n\n" + e.Message); }
         }
