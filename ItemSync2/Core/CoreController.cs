@@ -21,5 +21,35 @@ namespace ItemSync2.Core
                 return instance;
             }
         }
+
+        public void TestConnection()
+        {
+
+        }
+
+        public void SaveUserSettings()
+        {
+
+        }
+
+        public void Help()
+        {
+
+        }
+
+        public void CheckChanges()
+        {
+
+        }
+
+        public void DbToDbcSync()
+        {
+
+        }
+
+        public void DbcToDbSync()
+        {
+
+        }
     }
 }

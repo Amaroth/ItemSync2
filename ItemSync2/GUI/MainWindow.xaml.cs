@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ItemSync2.Core;
+using Microsoft.Win32;
 
 namespace ItemSync2.GUI
 {
@@ -45,94 +46,106 @@ namespace ItemSync2.GUI
             endIDBox.Value = usi.endID;
         }
 
+        private void Window_Drop(object sender, DragEventArgs e)
+        {
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (files.Length == 1)
+            {
+                if (System.IO.Path.GetExtension(files[0]).ToLower() == ".dbc" || System.IO.Path.GetExtension(files[0]).ToLower() == ".db2")
+                    dbcBox.Text = files[0];
+            }
+        }
+
+        #region Input field event handlers...
         private void dbcBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            usi.dbcPath = dbcBox.Text;
         }
 
         private void hostBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            usi.host = hostBox.Text;
         }
 
         private void loginBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            usi.login = Utilities.ToSecureString(loginBox.Text);
         }
 
         private void passwordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-
+            usi.password = Utilities.ToSecureString(passwordBox.Password);
         }
 
         private void databaseBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            usi.database = databaseBox.Text;
         }
 
         private void tableBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            usi.table = tableBox.Text;
         }
 
         private void portBox_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-
+            usi.port = (int)portBox.Value;
         }
 
         private void startIDBox_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-
+            usi.startID = (int)startIDBox.Value;
         }
 
         private void endIDBox_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-
+            usi.endID = (int)endIDBox.Value;
         }
 
         private void savePassBox_Checked(object sender, RoutedEventArgs e)
         {
-
+            usi.savePassword = (bool)savePassBox.IsChecked;
         }
+        #endregion
 
-        private void Window_Drop(object sender, DragEventArgs e)
-        {
-
-        }
-
+        #region Button event handlers...
         private void dbcButt_Click(object sender, RoutedEventArgs e)
         {
-
+            var ofd = new OpenFileDialog();
+            ofd.Filter = "DBC files (*.dbc)|*.dbc|DB2 files (*.db2)|*.db2";
+            if ((bool)ofd.ShowDialog())
+                dbcBox.Text = ofd.FileName;
         }
 
         private void testConnButt_Click(object sender, RoutedEventArgs e)
         {
-
+            core.TestConnection();
         }
 
         private void saveSettButt_Click(object sender, RoutedEventArgs e)
         {
-
+            core.SaveUserSettings();
         }
 
         private void helpButt_Click(object sender, RoutedEventArgs e)
         {
-
+            core.Help();
         }
 
         private void checkChangesButt_Click(object sender, RoutedEventArgs e)
         {
-
+            core.CheckChanges();
         }
 
         private void dbToDBCButt_Click(object sender, RoutedEventArgs e)
         {
-
+            core.DbToDbcSync();
         }
 
         private void dbcToDBButt_Click(object sender, RoutedEventArgs e)
         {
-
+            core.DbcToDbSync();
         }
+        #endregion
     }
 }
