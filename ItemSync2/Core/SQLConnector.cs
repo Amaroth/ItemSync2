@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security;
 using System.Windows;
+using WDBXLib.Definitions.WotLK;
 
 namespace ItemSync2.Core
 {

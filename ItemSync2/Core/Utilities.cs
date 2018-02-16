@@ -1,6 +1,7 @@
 ﻿using System.Xml;
 using System;
 using System.Security;
+using WDBXLib.Definitions.WotLK;
 
 namespace ItemSync2.Core
 {
@@ -24,6 +25,12 @@ namespace ItemSync2.Core
             }
             newNode.InnerText = innerText;
             parent.AppendChild(newNode);
+        }
+
+        public static bool AreEqual(Item a, Item b)
+        {
+            return ((a.ID == b.ID) && (a.ClassID == b.ClassID) && (a.SubclassID == b.SubclassID) && (a.Sound_override_subclassid == b.Sound_override_subclassid)
+                && (a.Material == b.Material) && (a.DisplayInfoID == b.DisplayInfoID) && (a.InventoryType == b.InventoryType) && (a.SheatheType == b.SheatheType));
         }
 
         #region Nothing to see here.

@@ -27,5 +27,10 @@ namespace ItemSync2.Core
             }
             catch (Exception e) { throw new Exception("Error occured while attempting to read provided DBC.:\n\n" + e.Message); }
         }
+
+        public Dictionary<int, Item> GetItems(int start, int end)
+        {
+            return null;
+        }
     }
 }
