@@ -66,8 +66,15 @@ namespace ItemSync2.Core
                 foreach (var item in inDbc)
                     if (!inDatabase.ContainsKey(item.Key))
                         missingInDb++;
-                MessageBox.Show(string.Format("{0} items in database are missing in DBC.\n{1} items in DBC are missing in database.\n{2} items are in both DBC and database, but have different data.",
-                    missingInDbc, missingInDb, different));
+                string output = string.Format("{0} items in database are missing in DBC.\n{1} items in DBC are missing in database.\n{2} items are in both DBC and database, but have different data.",
+                    missingInDbc, missingInDb, different);
+                if ((missingInDbc > 0 || different > 0) && missingInDb == 0)
+                    output += "\n\nRun DB > DBC.";
+                else if (missingInDb > 0 && missingInDbc == 0 && different == 0)
+                    output += "\n\nRun DBC > DB.";
+                else if ((missingInDbc > 0 || different > 0) && missingInDb > 0)
+                    output += "\n\nRun both DBC > DB and DB > DBC.";
+                MessageBox.Show(output);
             }
             catch (Exception e) { MessageBox.Show("Couldn't check for changes, following error occured.:\n\n" + e.Message); }
         }
