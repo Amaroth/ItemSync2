@@ -2,13 +2,16 @@
 <!--This file contains column association definitions. Compatible with TC2 Release 335.63. Change only if tool isn't compatible with your emu/TC2 version.-->
 <M2SQLConfig>
   <ColAssociations>
-    <ID></ID>
-    <ClassID></ClassID>
-    <SubclassID></SubclassID>
-    <SoundOverrideSubclassID></SoundOverrideSubclassID>
-    <Material></Material>
-    <DisplayID></DisplayID>
-    <InventoryType></InventoryType>
-    <SheatheType></SheatheType>
+    <ID>entry</ID>
+    <ClassID>class</ClassID>
+    <SubclassID>subclass</SubclassID>
+    <SoundOverrideSubclassID>SoundOverrideSubclass</SoundOverrideSubclassID>
+    <Material>Material</Material>
+    <DisplayID>displayid</DisplayID>
+    <InventoryType>InventoryType</InventoryType>
+    <SheatheType>sheath</SheatheType>
   </ColAssociations>
+  <DefaultValues>
+    <Quality>1</Quality>
+  </DefaultValues>
 </M2SQLConfig>

@@ -8,7 +8,7 @@
         Title="ItemSync 2.0 dev"
         Height="350" Width="570" MinHeight="300" MinWidth="500"
         AllowDrop="True" Drop="Window_Drop">
-    <Grid Margin="10,5,5,5">
+    <Grid Margin="10,5,10,5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="10*"/>
@@ -94,12 +94,12 @@
             </CheckBox.ToolTip>
         </CheckBox>
 
-        <Button Grid.Column="3" Grid.Row="0" Margin="5,0,5,0" Name="dbcButt" Click="dbcButt_Click" Content="Select DBC">
+        <Button Grid.Column="3" Grid.Row="0" Margin="5,0,0,0" Name="dbcButt" Click="dbcButt_Click" Content="Select DBC">
             <Button.ToolTip>
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">Click to select your DBC by using Open file dialog.</TextBlock>
             </Button.ToolTip>
         </Button>
-        <Button Grid.Column="3" Grid.Row="7" Margin="5,0,5,0" Name="testConnButt" Click="testConnButt_Click" Content="Test connection">
+        <Button Grid.Column="3" Grid.Row="7" Margin="5,0,0,0" Name="testConnButt" Click="testConnButt_Click" Content="Test connection">
             <Button.ToolTip>
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">Attempts to open a test connection to MySQL server using information you provided.</TextBlock>
             </Button.ToolTip>
@@ -114,12 +114,12 @@
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">Opens repository's issue tracker.</TextBlock>
             </Button.ToolTip>
         </Button>
-        <Button Grid.Column="3" Grid.Row="10" Margin="5,0,5,0" Name="checkChangesButt" Click="checkChangesButt_Click" Content="Check for changes">
+        <Button Grid.Column="3" Grid.Row="10" Margin="5,0,0,0" Name="checkChangesButt" Click="checkChangesButt_Click" Content="Check for changes">
             <Button.ToolTip>
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">Checks how many items exist within provided range in DB, how many in DBC, how many are missing and where, and how many aren't matching.</TextBlock>
             </Button.ToolTip>
         </Button>
-        <Button Grid.Column="3" Grid.Row="11" Grid.RowSpan="2" Margin="5,5,5,0" Name="dbToDBCButt" Click="dbToDBCButt_Click" Content="DB > DBC">
+        <Button Grid.Column="3" Grid.Row="11" Grid.RowSpan="2" Margin="5,5,0,0" Name="dbToDBCButt" Click="dbToDBCButt_Click" Content="DB > DBC">
             <Button.ToolTip>
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">Updates your DBC so it contains all items in DB and that all items in DBC match DB version.</TextBlock>
             </Button.ToolTip>

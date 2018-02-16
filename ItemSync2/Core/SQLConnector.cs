@@ -104,5 +104,25 @@ namespace ItemSync2.Core
             connection.Close();
             return result;
         }
+
+        public void Sync(List<Item> inDbc)
+        {
+            connection = new MySqlConnection(Utilities.ToInsecureString(connectionString));
+            connection.Open();
+
+            if (inDbc.Count > 0)
+            {
+                string cols = string.Format("`{0}`,`{1}`,`{2}`,`{3}`,`{4}`,`{5}`,`{6}`,`{7}`",
+                    conf.ID, conf.ClassID, conf.SubclassID, conf.SoundOverrideSubclassID, conf.Material, conf.DisplayID, conf.InventoryType, conf.SheatheType);
+                string query = string.Format("START TRANSACTION;\r\nINSERT INTO `{0}` ({1}) VALUES\r\n", table, cols);
+                bool first = true;
+                foreach (var item in inDbc)
+                {
+                    if (!first)
+                        query += ",\r\n";
+                    query += string.Format("");
+                }
+            }
+        }
     }
 }

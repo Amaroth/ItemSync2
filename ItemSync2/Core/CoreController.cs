@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.IO;
+using WDBXLib.Definitions.WotLK;
 
 namespace ItemSync2.Core
 {
@@ -73,7 +74,19 @@ namespace ItemSync2.Core
 
         public void DbToDbcSync()
         {
-
+            try
+            {
+                sql.SetConnectionInformation(usi.host, usi.port, usi.database, usi.table, usi.login, usi.password);
+                dbc.SetDBCFile(usi.dbcPath);
+                var inDatabase = sql.GetItems(usi.startID, usi.endID);
+                var inDbc = dbc.GetItems(usi.startID, usi.endID);
+                List<Item> forInsert = new List<Item>();
+                foreach (var item in inDbc)
+                    if (!inDatabase.ContainsKey(item.Key))
+                        forInsert.Add(item.Value);
+                sql.Sync(forInsert);
+            }
+            catch (Exception e) { MessageBox.Show("Couldn't insert items missing into database. Error:\n\n" + e.Message); }
         }
 
         public void DbcToDbSync()
