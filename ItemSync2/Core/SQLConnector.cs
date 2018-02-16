@@ -82,7 +82,7 @@ namespace ItemSync2.Core
             Dictionary<int, Item> result = new Dictionary<int, Item>();
             connection = new MySqlConnection(Utilities.ToInsecureString(connectionString));
             connection.Open();
-            var query = new MySqlCommand(string.Format("SELECT ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}) FROM {8} WHERE {0} BETWEEN {9} AND {10};",
+            var query = new MySqlCommand(string.Format("SELECT {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7} FROM {8} WHERE {0} BETWEEN {9} AND {10};",
                 conf.ID, conf.ClassID, conf.SubclassID, conf.SoundOverrideSubclassID, conf.Material, conf.DisplayID, conf.InventoryType, conf.SheatheType,
                 table, start, end), connection);
             using (var r = query.ExecuteReader())
@@ -110,19 +110,36 @@ namespace ItemSync2.Core
             connection = new MySqlConnection(Utilities.ToInsecureString(connectionString));
             connection.Open();
 
-            if (inDbc.Count > 0)
+            string cols = "";
+            foreach (var defVal in conf.defaultValues)
+                cols += string.Format("`{0}`, ", defVal.Key);
+            cols += string.Format("`{0}`, `{1}`, `{2}`, `{3}`, `{4}`, `{5}`, `{6}`, `{7}`",
+                conf.ID, conf.ClassID, conf.SubclassID, conf.SoundOverrideSubclassID, conf.Material, conf.DisplayID,
+                conf.InventoryType, conf.SheatheType);
+            string query = string.Format("START TRANSACTION;\r\nINSERT INTO `{0}` ({1}) VALUES\r\n", table, cols);
+            bool first = true;
+            foreach (var item in inDbc)
             {
-                string cols = string.Format("`{0}`,`{1}`,`{2}`,`{3}`,`{4}`,`{5}`,`{6}`,`{7}`",
-                    conf.ID, conf.ClassID, conf.SubclassID, conf.SoundOverrideSubclassID, conf.Material, conf.DisplayID, conf.InventoryType, conf.SheatheType);
-                string query = string.Format("START TRANSACTION;\r\nINSERT INTO `{0}` ({1}) VALUES\r\n", table, cols);
-                bool first = true;
-                foreach (var item in inDbc)
-                {
-                    if (!first)
-                        query += ",\r\n";
-                    query += string.Format("");
-                }
+                if (!first)
+                    query += ",\r\n";
+                query += "(";
+                foreach (var defVal in conf.defaultValues)
+                    query += string.Format("\"{0}\", ", defVal.Value);
+                query += string.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})",
+                    item.ID, item.ClassID, item.SubclassID, item.Sound_override_subclassid, item.Material, item.DisplayInfoID,
+                    item.InventoryType, item.SheatheType);
+                first = false;
             }
+            query += ";\r\nCOMMIT;";
+
+            using (var sw = new StreamWriter("SQLQueryBackup.sql"))
+            {
+                sw.Write(query);
+            }
+
+            var command = new MySqlCommand(query, connection);
+            command.ExecuteNonQuery();
+            connection.Close();
         }
     }
 }

@@ -29,9 +29,11 @@ namespace ItemSync2.Core
 
         public Dictionary<int, Item> GetItems(int start, int end)
         {
-            return (Dictionary<int, Item>)from row in dbc.Rows
-                                          where (row.ID >= start && row.ID <= end)
-                                          select row;
+            var result = new Dictionary<int, Item>();
+            foreach (var item in dbc.Rows)
+                if (item.ID >= start && item.ID <= end)
+                    result.Add(item.ID, item);
+            return result;
         }
     }
 }

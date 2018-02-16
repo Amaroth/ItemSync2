@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 
@@ -17,6 +18,8 @@ namespace ItemSync2.Core
         public string DisplayID;
         public string InventoryType;
         public string SheatheType;
+
+        public Dictionary<string, string> defaultValues;
 
         /// <summary>
         /// 
@@ -52,6 +55,11 @@ namespace ItemSync2.Core
                 DisplayID = xml.GetElementsByTagName("DisplayID")[0].InnerText;
                 InventoryType = xml.GetElementsByTagName("InventoryType")[0].InnerText;
                 SheatheType = xml.GetElementsByTagName("SheatheType")[0].InnerText;
+
+                defaultValues = new Dictionary<string, string>();
+                foreach (XmlNode element in xml.GetElementsByTagName("DefaultValues")[0].ChildNodes)
+                    if (element.NodeType == XmlNodeType.Element)
+                        defaultValues.Add(element.Name, element.InnerText);
             }
             catch (Exception e) { throw new Exception(string.Format("Error occured while loading data from {0}.\n\n", xmlPath) + e.Message); }
         }

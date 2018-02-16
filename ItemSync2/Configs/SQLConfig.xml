@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--This file contains column association definitions. Compatible with TC2 Release 335.63. Change only if tool isn't compatible with your emu/TC2 version.-->
+<!--Made to be compatible with TC2 Release 335.63.-->
 <M2SQLConfig>
   <ColAssociations>
+    <!--Do NOT edit names of the following elements. Only change names of columns (inner texts (content) of elements) in case 
+    your emu is not compatible with tool because of mismatching column names in database.-->
     <ID>entry</ID>
     <ClassID>class</ClassID>
     <SubclassID>subclass</SubclassID>
@@ -10,8 +12,11 @@
     <DisplayID>displayid</DisplayID>
     <InventoryType>InventoryType</InventoryType>
     <SheatheType>sheath</SheatheType>
+    <Name>name</Name>
   </ColAssociations>
   <DefaultValues>
-    <Quality>1</Quality>
+    <!--You can add or remove elements here. Give them name matching name of column in your item_template table
+    and set their inner text (content) to value which should be assigned as default to generated items.-->
+    <Name>ItemSyncGeneratedItem</Name>
   </DefaultValues>
 </M2SQLConfig>

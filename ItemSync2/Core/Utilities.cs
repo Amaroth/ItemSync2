@@ -2,6 +2,7 @@
 using System;
 using System.Security;
 using WDBXLib.Definitions.WotLK;
+using System.Collections.Generic;
 
 namespace ItemSync2.Core
 {
@@ -27,6 +28,12 @@ namespace ItemSync2.Core
             parent.AppendChild(newNode);
         }
 
+        /// <summary>
+        /// Compares two Item objects.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public static bool AreEqual(Item a, Item b)
         {
             return ((a.ID == b.ID) && (a.ClassID == b.ClassID) && (a.SubclassID == b.SubclassID) && (a.Sound_override_subclassid == b.Sound_override_subclassid)

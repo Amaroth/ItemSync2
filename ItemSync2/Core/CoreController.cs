@@ -74,6 +74,11 @@ namespace ItemSync2.Core
 
         public void DbToDbcSync()
         {
+            
+        }
+
+        public void DbcToDbSync()
+        {
             try
             {
                 sql.SetConnectionInformation(usi.host, usi.port, usi.database, usi.table, usi.login, usi.password);
@@ -84,14 +89,15 @@ namespace ItemSync2.Core
                 foreach (var item in inDbc)
                     if (!inDatabase.ContainsKey(item.Key))
                         forInsert.Add(item.Value);
-                sql.Sync(forInsert);
+                if (forInsert.Count > 0)
+                {
+                    sql.Sync(forInsert);
+                    MessageBox.Show("Generation process was successful!");
+                }
+                else
+                    MessageBox.Show("There was nothing found within specified range to import into database.");
             }
             catch (Exception e) { MessageBox.Show("Couldn't insert items missing into database. Error:\n\n" + e.Message); }
-        }
-
-        public void DbcToDbSync()
-        {
-
         }
     }
 }
