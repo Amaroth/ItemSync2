@@ -10,7 +10,7 @@ namespace ItemSync2.Core
 {
     class SQLConnector
     {
-        private SQLDataConfig sqlConfig;
+        private SQLDataConfig conf;
         private MySqlConnection connection;
 
         private string host;
@@ -27,7 +27,7 @@ namespace ItemSync2.Core
         {
             try
             {
-                sqlConfig = new SQLDataConfig("Configs/SQLConfig.xml");
+                conf = new SQLDataConfig("Configs/SQLConfig.xml");
             }
             catch (Exception e) { MessageBox.Show(e.ToString()); throw; }
         }
@@ -77,8 +77,32 @@ namespace ItemSync2.Core
 
         public Dictionary<int, Item> GetItems(int start, int end)
         {
-            // Get ordered stuff.
-            return null;
+            if (start > end)
+                throw new ArgumentException(string.Format("Start entry value ({0}) has to be lower or equal to end value ({1}).", start, end));
+            Dictionary<int, Item> result = new Dictionary<int, Item>();
+            connection = new MySqlConnection(Utilities.ToInsecureString(connectionString));
+            connection.Open();
+            var query = new MySqlCommand(string.Format("SELECT ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}) FROM {8} WHERE {0} BETWEEN {9} AND {10};",
+                conf.ID, conf.ClassID, conf.SubclassID, conf.SoundOverrideSubclassID, conf.Material, conf.DisplayID, conf.InventoryType, conf.SheatheType,
+                table, start, end), connection);
+            using (var r = query.ExecuteReader())
+            {
+                while (r.Read())
+                {
+                    result.Add(Convert.ToInt32(r[0]), new Item() {
+                        ID = Convert.ToInt32(r[0]),
+                        ClassID = Convert.ToInt32(r[1]),
+                        SubclassID = Convert.ToInt32(r[2]),
+                        Sound_override_subclassid = Convert.ToInt32(r[3]),
+                        Material = Convert.ToInt32(r[4]),
+                        DisplayInfoID = Convert.ToInt32(r[5]),
+                        InventoryType = Convert.ToInt32(r[6]),
+                        SheatheType = Convert.ToInt32(r[7])
+                    });
+                }
+            }
+            connection.Close();
+            return result;
         }
     }
 }

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using WDBXLib.Reader;
 using WDBXLib.Definitions.WotLK;
-using System.IO;
 using WDBXLib.Storage;
-using System.Windows;
+using System.Linq;
 
 namespace ItemSync2.Core
 {
@@ -30,7 +29,9 @@ namespace ItemSync2.Core
 
         public Dictionary<int, Item> GetItems(int start, int end)
         {
-            return null;
+            return (Dictionary<int, Item>)from row in dbc.Rows
+                                          where (row.ID >= start && row.ID <= end)
+                                          select row;
         }
     }
 }
