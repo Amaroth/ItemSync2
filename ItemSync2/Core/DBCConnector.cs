@@ -4,6 +4,7 @@ using WDBXLib.Reader;
 using WDBXLib.Definitions.WotLK;
 using WDBXLib.Storage;
 using System.Linq;
+using System.IO;
 
 namespace ItemSync2.Core
 {
@@ -34,6 +35,21 @@ namespace ItemSync2.Core
                 if (item.ID >= start && item.ID <= end)
                     result.Add(item.ID, item);
             return result;
+        }
+
+        public void Sync(Dictionary<int, Item> inDb)
+        {
+            foreach (var item in inDb)
+            {
+                if (dbc.Rows.ContainsKey(item.Key))
+                {
+                    dbc.Rows.RemoveByKey(item.Key);
+                    dbc.Rows.Add(item.Value);
+                }
+                else
+                    dbc.Rows.Add(item.Value);
+            }
+            DBReader.Write(dbc, filePath);
         }
     }
 }

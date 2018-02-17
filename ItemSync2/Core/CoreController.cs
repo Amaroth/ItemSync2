@@ -74,6 +74,8 @@ namespace ItemSync2.Core
                     output += "\n\nRun DBC > DB.";
                 else if ((missingInDbc > 0 || different > 0) && missingInDb > 0)
                     output += "\n\nRun both DBC > DB and DB > DBC.";
+                else
+                    output += "\n\nDBC is up to date, and nothing is missing in database - you don't have to do anything.";
                 MessageBox.Show(output);
             }
             catch (Exception e) { MessageBox.Show("Couldn't check for changes, following error occured.:\n\n" + e.Message); }
@@ -81,7 +83,22 @@ namespace ItemSync2.Core
 
         public void DbToDbcSync()
         {
-            
+            //try
+            {
+                sql.SetConnectionInformation(usi.host, usi.port, usi.database, usi.table, usi.login, usi.password);
+                dbc.SetDBCFile(usi.dbcPath);
+                var inDb = sql.GetItems(usi.startID, usi.endID);
+                
+                if (inDb.Count > 0)
+                {
+                    dbc.Sync(inDb);
+                    MessageBox.Show("Generation process was successful!");
+                }
+                else
+                    MessageBox.Show("There was nothing found within specified range to import into database.");
+
+            }
+            //catch (Exception e) { MessageBox.Show("Couldn't update DBC. Error:\n\n" + e.Message); }
         }
 
         public void DbcToDbSync()
