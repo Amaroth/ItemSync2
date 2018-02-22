@@ -42,6 +42,10 @@ namespace ItemSync2.Core
         public int startID = 0;
         public int endID = 16777215;
 
+        public bool createInDB = true;
+        public bool createInDBC = true;
+        public bool updateInDBC = true;
+
         /// <summary>
         /// Generates default user settings XML.
         /// </summary>
@@ -69,6 +73,9 @@ namespace ItemSync2.Core
             Utilities.XmlAddElement(xml, xml.DocumentElement, "port", port.ToString(), null);
             Utilities.XmlAddElement(xml, xml.DocumentElement, "startID", startID.ToString(), null);
             Utilities.XmlAddElement(xml, xml.DocumentElement, "endID", endID.ToString(), null);
+            Utilities.XmlAddElement(xml, xml.DocumentElement, "createInDB", createInDB.ToString(), null);
+            Utilities.XmlAddElement(xml, xml.DocumentElement, "createInDBC", createInDBC.ToString(), null);
+            Utilities.XmlAddElement(xml, xml.DocumentElement, "updateInDBC", updateInDBC.ToString(), null);
         }
 
         /// <summary>
@@ -97,6 +104,9 @@ namespace ItemSync2.Core
                     port = int.Parse(xml.GetElementsByTagName("port")[0].InnerText);
                     startID = int.Parse(xml.GetElementsByTagName("startID")[0].InnerText);
                     endID = int.Parse(xml.GetElementsByTagName("endID")[0].InnerText);
+                    createInDB = xml.GetElementsByTagName("createInDB")[0].InnerText.ToLower() == "true";
+                    createInDBC = xml.GetElementsByTagName("createInDBC")[0].InnerText.ToLower() == "true";
+                    updateInDBC = xml.GetElementsByTagName("updateInDBC")[0].InnerText.ToLower() == "true";
                 }
                 catch (Exception e)
                 {
@@ -127,6 +137,9 @@ namespace ItemSync2.Core
                 xml.GetElementsByTagName("port")[0].InnerText = port.ToString();
                 xml.GetElementsByTagName("startID")[0].InnerText = startID.ToString();
                 xml.GetElementsByTagName("endID")[0].InnerText = endID.ToString();
+                xml.GetElementsByTagName("createInDB")[0].InnerText = createInDB.ToString();
+                xml.GetElementsByTagName("createInDBC")[0].InnerText = createInDBC.ToString();
+                xml.GetElementsByTagName("updateInDBC")[0].InnerText = updateInDBC.ToString();
 
                 xml.Save(tw);
                 tw.Close();

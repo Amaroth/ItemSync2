@@ -44,6 +44,10 @@ namespace ItemSync2.GUI
 
             startIDBox.Value = usi.startID;
             endIDBox.Value = usi.endID;
+
+            createInDB.IsChecked = usi.createInDB;
+            createInDBC.IsChecked = usi.createInDBC;
+            updateInDBCBox.IsChecked = usi.updateInDBC;
         }
 
         private void Window_Drop(object sender, DragEventArgs e)
@@ -101,11 +105,6 @@ namespace ItemSync2.GUI
         {
             usi.endID = (int)endIDBox.Value;
         }
-
-        private void savePassBox_Checked(object sender, RoutedEventArgs e)
-        {
-            usi.savePassword = (bool)savePassBox.IsChecked;
-        }
         #endregion
 
         #region Button event handlers...
@@ -145,6 +144,28 @@ namespace ItemSync2.GUI
         private void dbcToDBButt_Click(object sender, RoutedEventArgs e)
         {
             core.DbcToDbSync();
+        }
+        #endregion
+
+        #region Checkbox event handlers...
+        private void savePassBox_Checked(object sender, RoutedEventArgs e)
+        {
+            usi.savePassword = (bool)savePassBox.IsChecked;
+        }
+
+        private void createInDB_Checked(object sender, RoutedEventArgs e)
+        {
+            usi.createInDB = (bool)createInDB.IsChecked;
+        }
+
+        private void createInDBC_Checked(object sender, RoutedEventArgs e)
+        {
+            usi.createInDBC = (bool)createInDBC.IsChecked;
+        }
+
+        private void updateInDBCBox_Checked(object sender, RoutedEventArgs e)
+        {
+            usi.updateInDBC = (bool)updateInDBCBox.IsChecked;
         }
         #endregion
     }

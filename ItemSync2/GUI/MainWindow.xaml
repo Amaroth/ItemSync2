@@ -6,13 +6,13 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="ItemSync 2.0 dev"
-        Height="350" Width="570" MinHeight="300" MinWidth="500"
+        Height="350" Width="570" MinHeight="300" MinWidth="570"
         AllowDrop="True" Drop="Window_Drop">
     <Grid Margin="10,5,10,5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="11*"/>
             <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -25,6 +25,7 @@
             <RowDefinition Height="10*"/>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="5*"/>
+            <RowDefinition Height="10*"/>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="10*"/>
@@ -88,7 +89,23 @@
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">End of range of item IDs tool should work with.</TextBlock>
             </xctk:IntegerUpDown.ToolTip>
         </xctk:IntegerUpDown>
-        <CheckBox Grid.Column="1" Grid.Row="11" Name="savePassBox" Content="Save password" VerticalAlignment="Center" Margin="5,0,5,0" Checked="savePassBox_Checked" Unchecked="savePassBox_Checked">
+        
+        <CheckBox Grid.Column="1" Grid.Row="12" Name="savePassBox" Content="Save password" VerticalAlignment="Center" Margin="5,0,5,0" Checked="savePassBox_Checked" Unchecked="savePassBox_Checked">
+            <CheckBox.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Used if you click Save settings button. If checked, password will be saved.</TextBlock>
+            </CheckBox.ToolTip>
+        </CheckBox>
+        <CheckBox Grid.Column="2" Grid.Row="11" Name="createInDB" Content="Create new in DB" VerticalAlignment="Center" Margin="5,0,5,0" Checked="createInDB_Checked" Unchecked="createInDB_Checked">
+            <CheckBox.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Used if you click Save settings button. If checked, password will be saved.</TextBlock>
+            </CheckBox.ToolTip>
+        </CheckBox>
+        <CheckBox Grid.Column="2" Grid.Row="12" Name="createInDBC" Content="Create new in DBC" VerticalAlignment="Center" Margin="5,0,5,0" Checked="createInDBC_Checked" Unchecked="createInDBC_Checked">
+            <CheckBox.ToolTip>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Used if you click Save settings button. If checked, password will be saved.</TextBlock>
+            </CheckBox.ToolTip>
+        </CheckBox>
+        <CheckBox Grid.Column="2" Grid.Row="13" Name="updateInDBCBox" Content="Update existing in DBC" VerticalAlignment="Center" Margin="5,0,5,0" Checked="updateInDBCBox_Checked"  Unchecked="updateInDBCBox_Checked">
             <CheckBox.ToolTip>
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">Used if you click Save settings button. If checked, password will be saved.</TextBlock>
             </CheckBox.ToolTip>
@@ -104,12 +121,12 @@
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">Attempts to open a test connection to MySQL server using information you provided.</TextBlock>
             </Button.ToolTip>
         </Button>
-        <Button Grid.Column="0" Grid.Row="11" Margin="0,0,5,0" Name="saveSettButt" Click="saveSettButt_Click" Content="Save settings">
+        <Button Grid.Column="0" Grid.Row="12" Margin="0,0,5,0" Name="saveSettButt" Click="saveSettButt_Click" Content="Save settings">
             <Button.ToolTip>
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">Saves data you entered into form and uses your prefferences as default on next startup.</TextBlock>
             </Button.ToolTip>
         </Button>
-        <Button Grid.Column="0" Grid.Row="12" Margin="0,0,5,0" Name="helpButt" Click="helpButt_Click" Content="Help">
+        <Button Grid.Column="0" Grid.Row="13" Margin="0,0,5,0" Name="helpButt" Click="helpButt_Click" Content="Help">
             <Button.ToolTip>
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">Opens repository's issue tracker.</TextBlock>
             </Button.ToolTip>
@@ -119,14 +136,9 @@
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">Checks how many items exist within provided range in DB, how many in DBC, how many are missing and where, and how many aren't matching.</TextBlock>
             </Button.ToolTip>
         </Button>
-        <Button Grid.Column="3" Grid.Row="11" Grid.RowSpan="2" Margin="5,5,0,0" Name="dbToDBCButt" Click="dbToDBCButt_Click" Content="DB > DBC">
+        <Button Grid.Column="3" Grid.Row="11" Grid.RowSpan="3" Margin="5,5,0,0" Name="dbToDBCButt" Click="dbToDBCButt_Click" Content="DO STUFF!!!">
             <Button.ToolTip>
-                <TextBlock TextWrapping="Wrap" MaxWidth="300">Updates your DBC so it contains all items in DB and that all items in DBC match DB version.</TextBlock>
-            </Button.ToolTip>
-        </Button>
-        <Button Grid.Column="2" Grid.Row="11" Grid.RowSpan="2" Margin="5,5,0,0" Name="dbcToDBButt" Click="dbcToDBButt_Click" Content="DBC > DB">
-            <Button.ToolTip>
-                <TextBlock TextWrapping="Wrap" MaxWidth="300">Inserts all items in DBC, which are missing in DB, into DB. Doesn't touch already existing stuff.</TextBlock>
+                <TextBlock TextWrapping="Wrap" MaxWidth="300">Syncs your item DB/DBC with each other, depending on your settings.</TextBlock>
             </Button.ToolTip>
         </Button>
     </Grid>
