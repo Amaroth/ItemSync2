@@ -45,8 +45,8 @@ namespace ItemSync2.GUI
             startIDBox.Value = usi.startID;
             endIDBox.Value = usi.endID;
 
-            createInDB.IsChecked = usi.createInDB;
-            createInDBC.IsChecked = usi.createInDBC;
+            createInDBBox.IsChecked = usi.createInDB;
+            createInDBCBox.IsChecked = usi.createInDBC;
             updateInDBCBox.IsChecked = usi.updateInDBC;
         }
 
@@ -148,14 +148,14 @@ namespace ItemSync2.GUI
             usi.savePassword = (bool)savePassBox.IsChecked;
         }
 
-        private void createInDB_Checked(object sender, RoutedEventArgs e)
+        private void createInDBBox_Checked(object sender, RoutedEventArgs e)
         {
-            usi.createInDB = (bool)createInDB.IsChecked;
+            usi.createInDB = (bool)createInDBBox.IsChecked;
         }
 
-        private void createInDBC_Checked(object sender, RoutedEventArgs e)
+        private void createInDBCBox_Checked(object sender, RoutedEventArgs e)
         {
-            usi.createInDBC = (bool)createInDBC.IsChecked;
+            usi.createInDBC = (bool)createInDBCBox.IsChecked;
         }
 
         private void updateInDBCBox_Checked(object sender, RoutedEventArgs e)

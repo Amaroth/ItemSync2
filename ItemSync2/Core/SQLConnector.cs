@@ -105,7 +105,7 @@ namespace ItemSync2.Core
             return result;
         }
 
-        public void Sync(List<Item> inDbc)
+        public void InsertIntoDB(List<Item> newFromDBC)
         {
             connection = new MySqlConnection(Utilities.ToInsecureString(connectionString));
             connection.Open();
@@ -118,7 +118,7 @@ namespace ItemSync2.Core
                 conf.InventoryType, conf.SheatheType);
             string query = string.Format("START TRANSACTION;\r\nINSERT INTO `{0}` ({1}) VALUES\r\n", table, cols);
             bool first = true;
-            foreach (var item in inDbc)
+            foreach (var item in newFromDBC)
             {
                 if (!first)
                     query += ",\r\n";

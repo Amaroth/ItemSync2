@@ -56,6 +56,7 @@ namespace ItemSync2.Core
                 int missingInDbc = 0;
                 int missingInDb = 0;
                 int different = 0;
+
                 foreach (var item in inDatabase)
                 {
                     if (!inDbc.ContainsKey(item.Key))
@@ -66,6 +67,7 @@ namespace ItemSync2.Core
                 foreach (var item in inDbc)
                     if (!inDatabase.ContainsKey(item.Key))
                         missingInDb++;
+
                 string output = string.Format("{0} items in database are missing in DBC.\n{1} items in DBC are missing in database.\n{2} items are in both DBC and database, but have different data.",
                     missingInDbc, missingInDb, different);
                 if ((missingInDbc > 0 || different > 0) && missingInDb == 0)
@@ -93,7 +95,11 @@ namespace ItemSync2.Core
                 dbc.SetDBCFile(usi.dbcPath);
                 var inDB = sql.GetItems(usi.startID, usi.endID);
                 dbc.Sync(inDB, usi.createInDBC, usi.updateInDBC);
-                List<Item> test = dbc.GetMissing(usi.startID, usi.endID, inDB);
+                if (usi.createInDB)
+                {
+                    List<Item> test = dbc.GetMissing(usi.startID, usi.endID, inDB);
+                    sql.InsertIntoDB(test);
+                }
             }
             else
                 MessageBox.Show("Nothing to do - check at least one checkbox next to DO STUFF!!! button.");
@@ -133,7 +139,7 @@ namespace ItemSync2.Core
                         forInsert.Add(item.Value);
                 if (forInsert.Count > 0)
                 {
-                    sql.Sync(forInsert);
+                    sql.InsertIntoDB(forInsert);
                     MessageBox.Show("Generation process was successful!");
                 }
                 else
