@@ -40,7 +40,7 @@ namespace ItemSync2.Core
                 && (a.Material == b.Material) && (a.DisplayInfoID == b.DisplayInfoID) && (a.InventoryType == b.InventoryType) && (a.SheatheType == b.SheatheType));
         }
 
-        #region Nothing to see here.
+        #region Nothing to see here...
         static byte[] entropy = System.Text.Encoding.Unicode.GetBytes("Wizzard on a Lizzard in a Blizzard Entertainment");
 
         public static string EncryptString(SecureString input)

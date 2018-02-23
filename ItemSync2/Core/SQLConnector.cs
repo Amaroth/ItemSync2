@@ -33,14 +33,14 @@ namespace ItemSync2.Core
         }
 
         /// <summary>
-        /// 
+        /// Sets connection string by using provided input.
         /// </summary>
-        /// <param name="host"></param>
-        /// <param name="port"></param>
-        /// <param name="database"></param>
-        /// <param name="table"></param>
-        /// <param name="login"></param>
-        /// <param name="password"></param>
+        /// <param name="host">IP/domain name.</param>
+        /// <param name="port">Port MySQL server is running on.</param>
+        /// <param name="database">Database name.</param>
+        /// <param name="table">Table name.</param>
+        /// <param name="login">User's login.</param>
+        /// <param name="password">User's password.</param>
         public void SetConnectionInformation(string host, int port, string database, string table, SecureString login, SecureString password)
         {
             try
@@ -58,17 +58,10 @@ namespace ItemSync2.Core
         }
 
         /// <summary>
-        /// 
+        /// Attempts to open a connection.
         /// </summary>
-        /// <param name="host"></param>
-        /// <param name="port"></param>
-        /// <param name="database"></param>
-        /// <param name="table"></param>
-        /// <param name="login"></param>
-        /// <param name="password"></param>
-        public void TestConnection(string host, int port, string database, string table, SecureString login, SecureString password)
+        public void TestConnection()
         {
-            SetConnectionInformation(host, port, database, table, login, password);
             try
             {
                 connection = new MySqlConnection(Utilities.ToInsecureString(connectionString));
@@ -80,10 +73,10 @@ namespace ItemSync2.Core
         }
 
         /// <summary>
-        /// 
+        /// Gets all items within provided range.
         /// </summary>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
+        /// <param name="start">Minimum of range.</param>
+        /// <param name="end">Maximum of range.</param>
         /// <returns></returns>
         public Dictionary<int, Item> GetItems(int start, int end)
         {
@@ -124,9 +117,9 @@ namespace ItemSync2.Core
         }
 
         /// <summary>
-        /// 
+        /// Turns provided input into one INSERT SQL query and executes it.
         /// </summary>
-        /// <param name="newFromDBC"></param>
+        /// <param name="newFromDBC">Data to insert.</param>
         public void InsertIntoDB(List<Item> newFromDBC)
         {
             try

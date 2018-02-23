@@ -32,7 +32,7 @@ namespace ItemSync2.Core
         }
 
         /// <summary>
-        /// Loads settings from XML specified in xmlPath.
+        /// Loads settings from XML specified in instance's xmlPath.
         /// </summary>
         private void LoadSettings()
         {
