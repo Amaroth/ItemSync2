@@ -26,6 +26,9 @@ namespace ItemSync2.Core
         private SQLConnector sql = new SQLConnector();
         private DBCConnector dbc = new DBCConnector();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void TestConnection()
         {
             try
@@ -35,16 +38,25 @@ namespace ItemSync2.Core
             catch (Exception e) { MessageBox.Show("Connection to MySQL server was not successful.\n\n" + e.Message); }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void SaveUserSettings()
         {
             usi.SaveUserSettings();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Help()
         {
             System.Diagnostics.Process.Start("https://github.com/Amaroth/ItemSync2/issues");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void CheckChanges()
         {
             try
@@ -90,62 +102,19 @@ namespace ItemSync2.Core
         {
             if (usi.createInDB || usi.createInDBC || usi.updateInDBC)
             {
-
                 sql.SetConnectionInformation(usi.host, usi.port, usi.database, usi.table, usi.login, usi.password);
                 dbc.SetDBCFile(usi.dbcPath);
                 var inDB = sql.GetItems(usi.startID, usi.endID);
-                dbc.Sync(inDB, usi.createInDBC, usi.updateInDBC);
+                dbc.UpdateDBC(inDB, usi.createInDBC, usi.updateInDBC);
                 if (usi.createInDB)
                 {
                     List<Item> test = dbc.GetMissing(usi.startID, usi.endID, inDB);
                     sql.InsertIntoDB(test);
                 }
+                MessageBox.Show("All successfully synced.");
             }
             else
                 MessageBox.Show("Nothing to do - check at least one checkbox next to DO STUFF!!! button.");
-        }
-
-        public void DbToDbcSync()
-        {
-            try
-            {
-                sql.SetConnectionInformation(usi.host, usi.port, usi.database, usi.table, usi.login, usi.password);
-                dbc.SetDBCFile(usi.dbcPath);
-                var inDb = sql.GetItems(usi.startID, usi.endID);
-                
-                if (inDb.Count > 0)
-                {
-                    dbc.Sync(inDb, usi.createInDBC, usi.updateInDBC);
-                    MessageBox.Show("Generation process was successful!");
-                }
-                else
-                    MessageBox.Show("There was nothing found within specified range to import into database.");
-
-            }
-            catch (Exception e) { MessageBox.Show("Couldn't update DBC. Error:\n\n" + e.Message); }
-        }
-
-        public void DbcToDbSync()
-        {
-            try
-            {
-                sql.SetConnectionInformation(usi.host, usi.port, usi.database, usi.table, usi.login, usi.password);
-                dbc.SetDBCFile(usi.dbcPath);
-                var inDatabase = sql.GetItems(usi.startID, usi.endID);
-                var inDbc = dbc.GetItems(usi.startID, usi.endID);
-                List<Item> forInsert = new List<Item>();
-                foreach (var item in inDbc)
-                    if (!inDatabase.ContainsKey(item.Key))
-                        forInsert.Add(item.Value);
-                if (forInsert.Count > 0)
-                {
-                    sql.InsertIntoDB(forInsert);
-                    MessageBox.Show("Generation process was successful!");
-                }
-                else
-                    MessageBox.Show("There was nothing found within specified range to import into database.");
-            }
-            catch (Exception e) { MessageBox.Show("Couldn't insert items missing into database. Error:\n\n" + e.Message); }
         }
     }
 }

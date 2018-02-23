@@ -15,7 +15,7 @@ namespace ItemSync2.Core
         private string filePath;
 
         /// <summary>
-        /// Opens given DBC file for reading.
+        /// 
         /// </summary>
         /// <param name="filePath"></param>
         public void SetDBCFile(string filePath)
@@ -28,6 +28,12 @@ namespace ItemSync2.Core
             catch (Exception e) { throw new Exception("Error occured while attempting to read provided DBC.:\n\n" + e.Message); }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
         public Dictionary<int, Item> GetItems(int start, int end)
         {
             var result = new Dictionary<int, Item>();
@@ -37,23 +43,40 @@ namespace ItemSync2.Core
             return result;
         }
 
-        public void Sync(Dictionary<int, Item> inDb, bool insertNew, bool updateOld)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inDb"></param>
+        /// <param name="insertNew"></param>
+        /// <param name="updateOld"></param>
+        public void UpdateDBC(Dictionary<int, Item> inDb, bool insertNew, bool updateOld)
         {
-            if (!insertNew && !updateOld)
-                return;
-            foreach (var item in inDb)
+            try
             {
-                if (dbc.Rows.ContainsKey(item.Key) && updateOld)
+                if (!insertNew && !updateOld)
+                    return;
+                foreach (var item in inDb)
                 {
-                    dbc.Rows.RemoveByKey(item.Key);
-                    dbc.Rows.Add(item.Value);
+                    if (dbc.Rows.ContainsKey(item.Key) && updateOld)
+                    {
+                        dbc.Rows.RemoveByKey(item.Key);
+                        dbc.Rows.Add(item.Value);
+                    }
+                    else if (insertNew)
+                        dbc.Rows.Add(item.Value);
                 }
-                else if (insertNew)
-                    dbc.Rows.Add(item.Value);
+                DBReader.Write(dbc, filePath);
             }
-            DBReader.Write(dbc, filePath);
+            catch (Exception e) { throw new Exception("Error occured while attempting to update DBC.:\n\n" + e.Message); }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startID"></param>
+        /// <param name="endID"></param>
+        /// <param name="inDB"></param>
+        /// <returns></returns>
         public List<Item> GetMissing(int startID, int endID, Dictionary<int, Item> inDB)
         {
             var result = new List<Item>();
