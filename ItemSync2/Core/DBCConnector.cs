@@ -51,23 +51,25 @@ namespace ItemSync2.Core
         /// <param name="updateOld">If true, update existing ones.</param>
         public void UpdateDBC(Dictionary<int, Item> inDb, bool insertNew, bool updateOld)
         {
-            try
+            if (insertNew || updateOld)
             {
-                if (!insertNew && !updateOld)
-                    return;
-                foreach (var item in inDb)
+                try
                 {
-                    if (dbc.Rows.ContainsKey(item.Key) && updateOld)
+                    foreach (var item in inDb)
                     {
-                        dbc.Rows.RemoveByKey(item.Key);
-                        dbc.Rows.Add(item.Value);
+                        if (dbc.Rows.ContainsKey(item.Key) && updateOld)
+                        {
+                            dbc.Rows.RemoveByKey(item.Key);
+                            dbc.Rows.Insert(item.Key, item.Value);
+                        }
+                        else if (insertNew)
+                            dbc.Rows.Add(item.Value);
                     }
-                    else if (insertNew)
-                        dbc.Rows.Add(item.Value);
+                    dbc.Rows.OrderBy(x => x.ID);
+                    DBReader.Write(dbc, filePath);
                 }
-                DBReader.Write(dbc, filePath);
+                catch (Exception e) { throw new Exception("Error occured while attempting to update DBC.:\n\n" + e.Message); }
             }
-            catch (Exception e) { throw new Exception("Error occured while attempting to update DBC.:\n\n" + e.Message); }
         }
 
         /// <summary>
