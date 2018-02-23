@@ -37,19 +37,30 @@ namespace ItemSync2.Core
             return result;
         }
 
-        public void Sync(Dictionary<int, Item> inDb)
+        public void Sync(Dictionary<int, Item> inDb, bool insertNew, bool updateOld)
         {
+            if (!insertNew && !updateOld)
+                return;
             foreach (var item in inDb)
             {
-                if (dbc.Rows.ContainsKey(item.Key))
+                if (dbc.Rows.ContainsKey(item.Key) && updateOld)
                 {
                     dbc.Rows.RemoveByKey(item.Key);
                     dbc.Rows.Add(item.Value);
                 }
-                else
+                else if (insertNew)
                     dbc.Rows.Add(item.Value);
             }
             DBReader.Write(dbc, filePath);
+        }
+
+        public List<Item> GetMissing(int startID, int endID, Dictionary<int, Item> inDB)
+        {
+            var result = new List<Item>();
+            foreach (var item in dbc.Rows)
+                if (!inDB.ContainsKey(item.ID))
+                    result.Add(item);
+            return result;
         }
     }
 }

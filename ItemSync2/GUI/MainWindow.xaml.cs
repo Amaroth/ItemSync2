@@ -136,14 +136,9 @@ namespace ItemSync2.GUI
             core.CheckChanges();
         }
 
-        private void dbToDBCButt_Click(object sender, RoutedEventArgs e)
+        private void doStuffButt_Click(object sender, RoutedEventArgs e)
         {
-            core.DbToDbcSync();
-        }
-
-        private void dbcToDBButt_Click(object sender, RoutedEventArgs e)
-        {
-            core.DbcToDbSync();
+            core.Sync();
         }
         #endregion
 

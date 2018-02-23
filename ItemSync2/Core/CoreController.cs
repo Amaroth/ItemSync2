@@ -81,9 +81,27 @@ namespace ItemSync2.Core
             catch (Exception e) { MessageBox.Show("Couldn't check for changes, following error occured.:\n\n" + e.Message); }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Sync()
+        {
+            if (usi.createInDB || usi.createInDBC || usi.updateInDBC)
+            {
+
+                sql.SetConnectionInformation(usi.host, usi.port, usi.database, usi.table, usi.login, usi.password);
+                dbc.SetDBCFile(usi.dbcPath);
+                var inDB = sql.GetItems(usi.startID, usi.endID);
+                dbc.Sync(inDB, usi.createInDBC, usi.updateInDBC);
+                List<Item> test = dbc.GetMissing(usi.startID, usi.endID, inDB);
+            }
+            else
+                MessageBox.Show("Nothing to do - check at least one checkbox next to DO STUFF!!! button.");
+        }
+
         public void DbToDbcSync()
         {
-            //try
+            try
             {
                 sql.SetConnectionInformation(usi.host, usi.port, usi.database, usi.table, usi.login, usi.password);
                 dbc.SetDBCFile(usi.dbcPath);
@@ -91,14 +109,14 @@ namespace ItemSync2.Core
                 
                 if (inDb.Count > 0)
                 {
-                    dbc.Sync(inDb);
+                    dbc.Sync(inDb, usi.createInDBC, usi.updateInDBC);
                     MessageBox.Show("Generation process was successful!");
                 }
                 else
                     MessageBox.Show("There was nothing found within specified range to import into database.");
 
             }
-            //catch (Exception e) { MessageBox.Show("Couldn't update DBC. Error:\n\n" + e.Message); }
+            catch (Exception e) { MessageBox.Show("Couldn't update DBC. Error:\n\n" + e.Message); }
         }
 
         public void DbcToDbSync()

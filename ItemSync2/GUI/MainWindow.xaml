@@ -136,7 +136,7 @@
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">Checks how many items exist within provided range in DB, how many in DBC, how many are missing and where, and how many aren't matching.</TextBlock>
             </Button.ToolTip>
         </Button>
-        <Button Grid.Column="3" Grid.Row="11" Grid.RowSpan="3" Margin="5,5,0,0" Name="dbToDBCButt" Click="dbToDBCButt_Click" Content="DO STUFF!!!">
+        <Button Grid.Column="3" Grid.Row="11" Grid.RowSpan="3" Margin="5,5,0,0" Name="doStuffButt" Click="doStuffButt_Click" Content="DO STUFF!!!">
             <Button.ToolTip>
                 <TextBlock TextWrapping="Wrap" MaxWidth="300">Syncs your item DB/DBC with each other, depending on your settings.</TextBlock>
             </Button.ToolTip>
