@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security;
+using System.Text;
 using System.Windows;
 using WDBXLib.Definitions.WotLK;
 
@@ -127,15 +128,39 @@ namespace ItemSync2.Core
                 connection = new MySqlConnection(Utilities.ToInsecureString(connectionString));
                 connection.Open();
 
-                string cols = "";
+                var cols = new StringBuilder("");
                 foreach (var defVal in conf.defaultValues)
-                    cols += string.Format("`{0}`, ", defVal.Key);
-                cols += string.Format("`{0}`, `{1}`, `{2}`, `{3}`, `{4}`, `{5}`, `{6}`, `{7}`",
+                    cols.AppendFormat("`{0}`, ", defVal.Key);
+                cols.AppendFormat("`{0}`, `{1}`, `{2}`, `{3}`, `{4}`, `{5}`, `{6}`, `{7}`",
                     conf.ID, conf.ClassID, conf.SubclassID, conf.SoundOverrideSubclassID, conf.Material, conf.DisplayID,
                     conf.InventoryType, conf.SheatheType);
-                string query = string.Format("START TRANSACTION;\r\nINSERT INTO `{0}` ({1}) VALUES\r\n", table, cols);
-                bool first = true;
+
+                var query = new StringBuilder("");
+                query.AppendFormat("START TRANSACTION;\r\nINSERT INTO `{0}` ({1}) VALUES\r\n", table, cols);
+                var first = true;
                 foreach (var item in newFromDBC)
+                {
+                    if (!first)
+                        query.Append(",\r\n");
+                    first = false;
+                    query.Append("(");
+                    foreach (var defVal in conf.defaultValues)
+                        query.AppendFormat("\"{0}\", ", defVal.Value);
+                    query.AppendFormat("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})",
+                        item.ID, item.ClassID, item.SubclassID, item.Sound_override_subclassid, item.Material, item.DisplayInfoID,
+                        item.InventoryType, item.SheatheType);
+                }
+                query.Append(";\r\nCOMMIT;");
+
+                    /*string colsO = "";
+                    foreach (var defVal in conf.defaultValues)
+                        colsO += string.Format("`{0}`, ", defVal.Key);
+                    colsO += string.Format("`{0}`, `{1}`, `{2}`, `{3}`, `{4}`, `{5}`, `{6}`, `{7}`",
+                        conf.ID, conf.ClassID, conf.SubclassID, conf.SoundOverrideSubclassID, conf.Material, conf.DisplayID,
+                        conf.InventoryType, conf.SheatheType);*/
+                    //string query = string.Format("START TRANSACTION;\r\nINSERT INTO `{0}` ({1}) VALUES\r\n", table, colsO);
+                    //bool first = true;
+                   /* foreach (var item in newFromDBC)
                 {
                     if (!first)
                         query += ",\r\n";
@@ -146,15 +171,15 @@ namespace ItemSync2.Core
                         item.ID, item.ClassID, item.SubclassID, item.Sound_override_subclassid, item.Material, item.DisplayInfoID,
                         item.InventoryType, item.SheatheType);
                     first = false;
-                }
-                query += ";\r\nCOMMIT;";
+                }*/
+                //query += ";\r\nCOMMIT;";
 
                 using (var sw = new StreamWriter("SQLQueryBackup.sql"))
                 {
                     sw.Write(query);
                 }
 
-                var command = new MySqlCommand(query, connection);
+                var command = new MySqlCommand(query.ToString(), connection);
                 command.ExecuteNonQuery();
                 connection.Close();
             }

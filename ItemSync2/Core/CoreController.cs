@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.IO;
 using WDBXLib.Definitions.WotLK;
 
 namespace ItemSync2.Core

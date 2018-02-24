@@ -4,7 +4,6 @@ using WDBXLib.Reader;
 using WDBXLib.Definitions.WotLK;
 using WDBXLib.Storage;
 using System.Linq;
-using System.IO;
 
 namespace ItemSync2.Core
 {
@@ -83,7 +82,7 @@ namespace ItemSync2.Core
         {
             var result = new List<Item>();
             foreach (var item in dbc.Rows)
-                if (!inDB.ContainsKey(item.ID))
+                if (!inDB.ContainsKey(item.ID) && item.ID >= startID && item.ID <= endID)
                     result.Add(item);
             return result;
         }
