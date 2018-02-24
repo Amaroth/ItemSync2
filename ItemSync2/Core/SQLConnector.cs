@@ -128,14 +128,14 @@ namespace ItemSync2.Core
                 connection = new MySqlConnection(Utilities.ToInsecureString(connectionString));
                 connection.Open();
 
-                var cols = new StringBuilder("");
+                var cols = new StringBuilder();
                 foreach (var defVal in conf.defaultValues)
                     cols.AppendFormat("`{0}`, ", defVal.Key);
                 cols.AppendFormat("`{0}`, `{1}`, `{2}`, `{3}`, `{4}`, `{5}`, `{6}`, `{7}`",
                     conf.ID, conf.ClassID, conf.SubclassID, conf.SoundOverrideSubclassID, conf.Material, conf.DisplayID,
                     conf.InventoryType, conf.SheatheType);
 
-                var query = new StringBuilder("");
+                var query = new StringBuilder();
                 query.AppendFormat("START TRANSACTION;\r\nINSERT INTO `{0}` ({1}) VALUES\r\n", table, cols);
                 var first = true;
                 foreach (var item in newFromDBC)
@@ -151,28 +151,6 @@ namespace ItemSync2.Core
                         item.InventoryType, item.SheatheType);
                 }
                 query.Append(";\r\nCOMMIT;");
-
-                    /*string colsO = "";
-                    foreach (var defVal in conf.defaultValues)
-                        colsO += string.Format("`{0}`, ", defVal.Key);
-                    colsO += string.Format("`{0}`, `{1}`, `{2}`, `{3}`, `{4}`, `{5}`, `{6}`, `{7}`",
-                        conf.ID, conf.ClassID, conf.SubclassID, conf.SoundOverrideSubclassID, conf.Material, conf.DisplayID,
-                        conf.InventoryType, conf.SheatheType);*/
-                    //string query = string.Format("START TRANSACTION;\r\nINSERT INTO `{0}` ({1}) VALUES\r\n", table, colsO);
-                    //bool first = true;
-                   /* foreach (var item in newFromDBC)
-                {
-                    if (!first)
-                        query += ",\r\n";
-                    query += "(";
-                    foreach (var defVal in conf.defaultValues)
-                        query += string.Format("\"{0}\", ", defVal.Value);
-                    query += string.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})",
-                        item.ID, item.ClassID, item.SubclassID, item.Sound_override_subclassid, item.Material, item.DisplayInfoID,
-                        item.InventoryType, item.SheatheType);
-                    first = false;
-                }*/
-                //query += ";\r\nCOMMIT;";
 
                 using (var sw = new StreamWriter("SQLQueryBackup.sql"))
                 {
