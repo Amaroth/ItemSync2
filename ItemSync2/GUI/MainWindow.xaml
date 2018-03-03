@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="ItemSync 2.0 test1"
+        Title="ItemSync 2.0"
         Height="350" Width="570" MinHeight="300" MinWidth="570"
         AllowDrop="True" Drop="Window_Drop">
     <Grid Margin="10,5,10,5">
