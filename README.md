@@ -1,4 +1,4 @@
-# ItemSync 2.0 test1 pre-release
+# ItemSync 2.0
 Main purpouse of application is keeping item.dbc up to date with database item data.
 
 Supports:
